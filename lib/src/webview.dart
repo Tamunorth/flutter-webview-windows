@@ -717,9 +717,9 @@ class _WebviewState extends State<Webview> {
                       } else if (signal.panDelta.dy > 0) {
                         _controller._setScrollDelta(0, signal.localPanDelta.dy);
                       } else if (signal.panDelta.dx < 0) {
-                        _controller._setScrollDelta(signal.localPanDelta.dx, 0);
+                        _controller._setScrollDelta(signal.localPanDelta.dx,signal.localPanDelta.dy);
                       } else if (signal.panDelta.dx > 0) {
-                        _controller._setScrollDelta(signal.localPanDelta.dx, 0);
+                        _controller._setScrollDelta(signal.localPanDelta.dx, signal.localPanDelta.dy);
                       }
                       // _controller._setScrollDelta(
                       //     signal.panDelta.dx, signal.panDelta.dy);
