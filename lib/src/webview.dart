@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'enums.dart';
 import 'cursor.dart';
+import 'enums.dart';
 
 class HistoryChanged {
   final bool canGoBack;
@@ -703,14 +703,36 @@ class _WebviewState extends State<Webview> {
                       }
                     },
                     onPointerSignal: (signal) {
+                      // print('onPointerSignal');
+
                       if (signal is PointerScrollEvent) {
+                        // print(signal.scrollDelta.dy.toString());
+
                         _controller._setScrollDelta(
                             -signal.scrollDelta.dx, -signal.scrollDelta.dy);
                       }
                     },
                     onPointerPanZoomUpdate: (signal) {
-                      _controller._setScrollDelta(
-                          signal.panDelta.dx, signal.panDelta.dy);
+                      // print('onPointerSignal');
+                      // print(signal.toStringFull());
+                      print(signal.panDelta.dx);
+                      print(signal.panDelta.dy);
+                      //
+                      // _controller._setScrollDelta(-0, -signal.localPanDelta.dy);
+
+                      if (signal.panDelta.dy < 0) {
+                        _controller._setScrollDelta(
+                            0, -signal.localPanDelta.dy);
+                      } else if (signal.panDelta.dy > 0) {
+                        _controller._setScrollDelta(
+                            0, -signal.localPanDelta.dy);
+                      } else if (signal.panDelta.dx < 0) {
+                        _controller._setScrollDelta(signal.localPanDelta.dx, 0);
+                      } else if (signal.panDelta.dx > 0) {
+                        _controller._setScrollDelta(signal.localPanDelta.dx, 0);
+                      }
+                      // _controller._setScrollDelta(
+                      //     signal.panDelta.dx, signal.panDelta.dy);
                     },
                     child: MouseRegion(
                         cursor: _cursor,
